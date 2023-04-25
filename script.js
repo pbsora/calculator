@@ -7,16 +7,16 @@ const multBt = document.querySelector(".multiply");
 const divideBt = document.querySelector(".divide");
 const equalBt = document.querySelector(".equal");
 const clearBt = document.querySelector(".clear");
+const reverseBt = document.querySelector(".reverse");
 
 let num1 = 0;
 let num2 = 0;
 let operand = "";
 let total = 0;
-let used = false;
 let done = false;
 
+//Loop through all numbers and add click function
 const numbers = document.getElementsByClassName("number");
-
 for (let num of numbers) {
   numbers[num.innerText].addEventListener("click", () => {
     /* if (done) clearScreen(), (done = false); */
@@ -24,31 +24,104 @@ for (let num of numbers) {
   });
 }
 
+//Plus button
 plusBt.addEventListener("click", () => {
   if (!operand) {
     num1 = lScreen.innerText;
     operand = "+";
     uScreen.innerText = `${num1} ${operand}`;
     lScreen.innerText = "";
-    console.log("aqui");
   } else {
     num2 = lScreen.innerText;
-    if (total == 0) {
-      total += addNums(num1, num2);
-    } else {
-      total = addNums(total, num2);
-    }
+    if (total) num1 = total;
+    num2 = lScreen.innerText;
+    total = operate(num1, num2, operand);
+    operand = "+";
     uScreen.innerText = `${total} ${operand} `;
-    console.log("ou aqui");
+
     lScreen.innerText = "";
   }
 });
 
+//Minus button
+minusBt.addEventListener("click", () => {
+  if (!operand) {
+    num1 = lScreen.innerText;
+    operand = "-";
+    uScreen.innerText = `${num1} ${operand}`;
+    lScreen.innerText = "";
+  } else {
+    num2 = lScreen.innerText;
+    if (total) num1 = total;
+    num2 = lScreen.innerText;
+    total = operate(num1, num2, operand);
+    operand = "-";
+    uScreen.innerText = `${total} ${operand} `;
+
+    lScreen.innerText = "";
+  }
+});
+
+//Multiplication button
+multBt.addEventListener("click", () => {
+  if (!operand) {
+    num1 = lScreen.innerText;
+    operand = "*";
+    uScreen.innerText = `${num1} ${operand}`;
+    lScreen.innerText = "";
+  } else {
+    num2 = lScreen.innerText;
+    if (total) num1 = total;
+    num2 = lScreen.innerText;
+    total = operate(num1, num2, operand);
+    operand = "*";
+    uScreen.innerText = `${total} ${operand} `;
+
+    lScreen.innerText = "";
+  }
+});
+
+//Divide button
+divideBt.addEventListener("click", () => {
+  if (!operand) {
+    num1 = lScreen.innerText;
+    operand = "/";
+    uScreen.innerText = `${num1} ${operand}`;
+    lScreen.innerText = "";
+  } else {
+    num2 = lScreen.innerText;
+    if (total) num1 = total;
+    num2 = lScreen.innerText;
+    total = operate(num1, num2, operand);
+    operand = "/";
+    uScreen.innerText = `${total} ${operand} `;
+
+    lScreen.innerText = "";
+  }
+});
+
+/* if (!operand) {
+      num1 = lScreen.innerText;
+      operand = `${op.innerText}`;
+      uScreen.innerText = `${num1} ${operand}`;
+      lScreen.innerText = "";
+    } else {
+      num2 = lScreen.innerText;
+      if (total) num1 = total;
+      num2 = lScreen.innerText;
+      total = operate(num1, num2, operand);
+      operand = `${op.innerText}`;
+      uScreen.innerText = `${total} ${operand} `;
+
+      lScreen.innerText = "";
+    } */
+
+//Result button
 equalBt.addEventListener("click", () => {
   if (operand) {
     if (total) num1 = total;
     num2 = lScreen.innerText;
-    total = addNums(num1, num2);
+    total = operate(num1, num2, operand);
     uScreen.innerText = `${num1} ${operand} ${num2} = `;
     lScreen.innerText = total;
     operand = "";
@@ -57,19 +130,23 @@ equalBt.addEventListener("click", () => {
   }
 });
 
+//Calls math functions
 let operate = (num1, num2, operand) => {
   switch (operand) {
     case "+":
       return addNums(num1, num2);
       break;
     case "-":
-      subNums(num1, num2);
+      return subNums(num1, num2);
+      break;
+    case "*":
+      return multNums(num1, num2);
+      break;
+    case "/":
+      return divideNums(num1, num2);
+      break;
   }
 };
-
-clearBt.addEventListener("click", () => {
-  clearScreen();
-});
 
 let addNums = (num1, num2) => {
   return +num1 + +num2;
@@ -87,6 +164,18 @@ let divideNums = (num1, num2) => {
   return +num1 / +num2;
 };
 
+//Transform to negative/positive
+let transform = () => {
+  lScreen.innerText *= -1;
+};
+
+reverseBt.addEventListener("click", () => transform());
+
+//Clear screen and all variables
+clearBt.addEventListener("click", () => {
+  clearScreen();
+});
+
 let clearScreen = () => {
   num1 = 0;
   num2 = 0;
@@ -94,7 +183,7 @@ let clearScreen = () => {
   total = 0;
   used = false;
   uScreen.innerText = "";
-  lScreen.innerText = "0";
+  lScreen.innerText = "";
 };
 
 /* let a = 2;
