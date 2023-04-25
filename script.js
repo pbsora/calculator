@@ -9,6 +9,7 @@ const equalBt = document.querySelector(".equal");
 const clearBt = document.querySelector(".clear");
 const reverseBt = document.querySelector(".reverse");
 const deleteBt = document.querySelector(".del");
+const dotBt = document.querySelector(".dot");
 
 let num1 = 0;
 let num2 = 0;
@@ -31,14 +32,16 @@ plusBt.addEventListener("click", () => {
     operand = "+";
     uScreen.innerText = `${num1} ${operand}`;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   } else {
     num2 = lScreen.innerText;
     if (total) num1 = total;
     num2 = lScreen.innerText;
-    total = operate(num1, num2, operand);
+    total = +operate(num1, num2, operand).toFixed(2);
     operand = "+";
     uScreen.innerText = `${total} ${operand} `;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   }
 });
 
@@ -49,14 +52,16 @@ minusBt.addEventListener("click", () => {
     operand = "-";
     uScreen.innerText = `${num1} ${operand}`;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   } else {
     num2 = lScreen.innerText;
     if (total) num1 = total;
     num2 = lScreen.innerText;
-    total = operate(num1, num2, operand);
+    total = +operate(num1, num2, operand).toFixed(2);
     operand = "-";
     uScreen.innerText = `${total} ${operand} `;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   }
 });
 
@@ -67,14 +72,16 @@ multBt.addEventListener("click", () => {
     operand = "*";
     uScreen.innerText = `${num1} ${operand}`;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   } else {
     num2 = lScreen.innerText;
     if (total) num1 = total;
     num2 = lScreen.innerText;
-    total = operate(num1, num2, operand);
+    total = +operate(num1, num2, operand).toFixed(2);
     operand = "*";
     uScreen.innerText = `${total} ${operand} `;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   }
 });
 
@@ -85,14 +92,16 @@ divideBt.addEventListener("click", () => {
     operand = "/";
     uScreen.innerText = `${num1} ${operand}`;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   } else {
     num2 = lScreen.innerText;
     if (total) num1 = total;
     num2 = lScreen.innerText;
-    total = operate(num1, num2, operand);
+    total = +operate(num1, num2, operand).toFixed(2);
     operand = "/";
     uScreen.innerText = `${total} ${operand} `;
     lScreen.innerText = "";
+    dotBt.disabled = false;
   }
 });
 
@@ -101,9 +110,10 @@ equalBt.addEventListener("click", () => {
   if (operand) {
     if (total) num1 = total;
     num2 = lScreen.innerText;
-    total = operate(num1, num2, operand);
+    total = +operate(num1, num2, operand).toFixed(2);
     uScreen.innerText = `${num1} ${operand} ${num2} = `;
     lScreen.innerText = total;
+    dotBt.disabled = false;
     operand = "";
     done = true;
     total = 0;
@@ -169,6 +179,12 @@ let clearScreen = () => {
 //Delete number
 deleteBt.addEventListener("click", () => {
   lScreen.innerText = lScreen.innerText.slice(0, -1);
+});
+
+//Adds dot and blocks button until = is pressed
+dotBt.addEventListener("click", () => {
+  lScreen.innerText += ".";
+  dotBt.disabled = true;
 });
 
 /* let a = 2;
