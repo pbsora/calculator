@@ -8,18 +8,18 @@ const divideBt = document.querySelector(".divide");
 const equalBt = document.querySelector(".equal");
 const clearBt = document.querySelector(".clear");
 const reverseBt = document.querySelector(".reverse");
+const deleteBt = document.querySelector(".del");
 
 let num1 = 0;
 let num2 = 0;
-let operand = "";
 let total = 0;
+let operand = "";
 let done = false;
 
-//Loop through all numbers and add click function
+//Loop through all numbers and add click event
 const numbers = document.getElementsByClassName("number");
 for (let num of numbers) {
   numbers[num.innerText].addEventListener("click", () => {
-    /* if (done) clearScreen(), (done = false); */
     lScreen.innerText += `${numbers[num.innerText].innerText}`;
   });
 }
@@ -38,7 +38,6 @@ plusBt.addEventListener("click", () => {
     total = operate(num1, num2, operand);
     operand = "+";
     uScreen.innerText = `${total} ${operand} `;
-
     lScreen.innerText = "";
   }
 });
@@ -57,7 +56,6 @@ minusBt.addEventListener("click", () => {
     total = operate(num1, num2, operand);
     operand = "-";
     uScreen.innerText = `${total} ${operand} `;
-
     lScreen.innerText = "";
   }
 });
@@ -76,7 +74,6 @@ multBt.addEventListener("click", () => {
     total = operate(num1, num2, operand);
     operand = "*";
     uScreen.innerText = `${total} ${operand} `;
-
     lScreen.innerText = "";
   }
 });
@@ -95,26 +92,9 @@ divideBt.addEventListener("click", () => {
     total = operate(num1, num2, operand);
     operand = "/";
     uScreen.innerText = `${total} ${operand} `;
-
     lScreen.innerText = "";
   }
 });
-
-/* if (!operand) {
-      num1 = lScreen.innerText;
-      operand = `${op.innerText}`;
-      uScreen.innerText = `${num1} ${operand}`;
-      lScreen.innerText = "";
-    } else {
-      num2 = lScreen.innerText;
-      if (total) num1 = total;
-      num2 = lScreen.innerText;
-      total = operate(num1, num2, operand);
-      operand = `${op.innerText}`;
-      uScreen.innerText = `${total} ${operand} `;
-
-      lScreen.innerText = "";
-    } */
 
 //Result button
 equalBt.addEventListener("click", () => {
@@ -134,21 +114,21 @@ equalBt.addEventListener("click", () => {
 let operate = (num1, num2, operand) => {
   switch (operand) {
     case "+":
-      return addNums(num1, num2);
+      return +num1 + +num2;
       break;
     case "-":
-      return subNums(num1, num2);
+      return +num1 - +num2;
       break;
     case "*":
-      return multNums(num1, num2);
+      return +num1 * +num2;
       break;
     case "/":
-      return divideNums(num1, num2);
+      return +num1 / +num2;
       break;
   }
 };
 
-let addNums = (num1, num2) => {
+/* let addNums = (num1, num2) => {
   return +num1 + +num2;
 };
 
@@ -162,7 +142,7 @@ let multNums = (num1, num2) => {
 
 let divideNums = (num1, num2) => {
   return +num1 / +num2;
-};
+}; */
 
 //Transform to negative/positive
 let transform = () => {
@@ -185,6 +165,11 @@ let clearScreen = () => {
   uScreen.innerText = "";
   lScreen.innerText = "";
 };
+
+//Delete number
+deleteBt.addEventListener("click", () => {
+  lScreen.innerText = lScreen.innerText.slice(0, -1);
+});
 
 /* let a = 2;
 let b = 2;
